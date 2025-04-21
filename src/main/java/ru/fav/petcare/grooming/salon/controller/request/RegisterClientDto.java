@@ -1,4 +1,4 @@
-package ru.fav.petcare.grooming.salon.controller.dto;
+package ru.fav.petcare.grooming.salon.controller.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RegistrationClientDto {
+public class RegisterClientDto {
 
     @NotBlank
     @Size(max = 50)

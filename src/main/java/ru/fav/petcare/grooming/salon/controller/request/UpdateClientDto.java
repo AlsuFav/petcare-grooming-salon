@@ -1,4 +1,4 @@
-package ru.fav.petcare.grooming.salon.controller.dto;
+package ru.fav.petcare.grooming.salon.controller.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

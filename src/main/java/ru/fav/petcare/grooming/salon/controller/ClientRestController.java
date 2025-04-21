@@ -1,18 +1,13 @@
 package ru.fav.petcare.grooming.salon.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.fav.petcare.grooming.salon.controller.dto.ClientDto;
-import ru.fav.petcare.grooming.salon.controller.dto.UpdateClientDto;
 import ru.fav.petcare.grooming.salon.controller.mapper.ClientMapper;
 import ru.fav.petcare.grooming.salon.entity.Client;
 import ru.fav.petcare.grooming.salon.exception.UnauthorizedAccessException;
-import ru.fav.petcare.grooming.salon.repository.ClientRepository;
 import ru.fav.petcare.grooming.salon.security.AuthUtils;
 import ru.fav.petcare.grooming.salon.service.ClientService;
 
