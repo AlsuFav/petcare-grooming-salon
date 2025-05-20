@@ -20,6 +20,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Client client = clientService.findClientByPhone(username);
-        return new User(client.getPhone(), client.getPassword(), Collections.singleton(new SimpleGrantedAuthority("CLIENT")));
+        return new User(client.getPhone(), client.getPassword(), Collections.singleton(new SimpleGrantedAuthority("ROLE_CLIENT")));
     }
 }

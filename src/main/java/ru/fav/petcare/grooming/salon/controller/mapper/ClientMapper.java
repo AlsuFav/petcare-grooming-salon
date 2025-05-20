@@ -12,15 +12,7 @@ public class ClientMapper {
         dto.setFirstName(client.getFirstName());
         dto.setLastName(client.getLastName());
         dto.setPhone(client.getPhone());
+        dto.setEmail(client.getEmail());
         return dto;
-    }
-
-    public Client toEntity(ClientDto dto) {
-        Client client = new Client();
-        client.setFirstName(dto.getFirstName());
-        client.setLastName(dto.getLastName());
-        client.setPhone(dto.getPhone());
-        // password not included here for security reasons — set it elsewhere if needed
-        return client;
     }
 }

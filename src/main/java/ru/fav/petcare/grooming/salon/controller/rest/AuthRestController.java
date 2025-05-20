@@ -1,4 +1,4 @@
-package ru.fav.petcare.grooming.salon.controller;
+package ru.fav.petcare.grooming.salon.controller.rest;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.fav.petcare.grooming.salon.controller.request.RegisterClientDto;
+import ru.fav.petcare.grooming.salon.controller.request.RegisterClientRequest;
 import ru.fav.petcare.grooming.salon.controller.request.LoginClientRequest;
 import ru.fav.petcare.grooming.salon.controller.response.JwtResponse;
 import ru.fav.petcare.grooming.salon.entity.Client;
@@ -54,13 +54,13 @@ public class AuthRestController {
     })
 
     @PostMapping("/register")
-    public ResponseEntity<JwtResponse> createNewUser(@Valid @RequestBody RegisterClientDto registerClientDto) {
+    public ResponseEntity<JwtResponse> createNewUser(@Valid @RequestBody RegisterClientRequest registerClientRequest) {
         Client client = clientAuthService.register(
-                registerClientDto.getFirstName(),
-                registerClientDto.getLastName(),
-                registerClientDto.getPhone(),
-                registerClientDto.getPassword(),
-                registerClientDto.getConfirmPassword()
+                registerClientRequest.getFirstName(),
+                registerClientRequest.getLastName(),
+                registerClientRequest.getPhone(),
+                registerClientRequest.getPassword(),
+                registerClientRequest.getConfirmPassword()
         );
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(client.getPhone());

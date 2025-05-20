@@ -1,6 +1,7 @@
 package ru.fav.petcare.grooming.salon.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,8 +33,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             jwt = authHeader.substring(7);
             try {
                 id = jwtTokenUtils.extractId(jwt);
-            } catch (ExpiredJwtException e) {
-                log.debug("JWT expired");
+            } catch (JwtException | IllegalArgumentException ignored) {
             }
         }
 

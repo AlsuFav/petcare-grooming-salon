@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UpdateClientDto {
+public class RegisterClientRequest {
 
     @NotBlank
     @Size(max = 50)
@@ -21,9 +21,13 @@ public class UpdateClientDto {
     @NotBlank
     private String password;
 
+    @NotBlank
+    private String confirmPassword;
+
+    @NotBlank
     @Pattern(
         regexp = "\\+7 \\(\\d{3}\\) \\d{3}-\\d{2}-\\d{2}",
-        message = "Phone number must match the format +7 (XXX) XXX-XX-XX"
+        message = "Номер телефона должен быть в формате +7 (XXX) XXX-XX-XX"
     )
     private String phone;
 }

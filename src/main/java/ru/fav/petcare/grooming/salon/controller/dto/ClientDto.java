@@ -3,12 +3,17 @@ package ru.fav.petcare.grooming.salon.controller.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClientDto {
+
     @NotBlank
     @Size(max = 50)
     private String firstName;
@@ -22,4 +27,6 @@ public class ClientDto {
             message = "Phone number must match the format +7 (XXX) XXX-XX-XX"
     )
     private String phone;
+
+    private String email;
 }

@@ -1,10 +1,8 @@
 package ru.fav.petcare.grooming.salon.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
-
 import java.util.Objects;
 
 @Entity
@@ -24,17 +22,17 @@ public class Client {
     @Column(nullable = false, unique = true)
     private String phone;
 
+    private String email;
+
     @Column(nullable = false)
-    @JsonIgnore
     private String password;
 
-    public Client(String lastName, String firstName, String phone, String password) {
-        this.lastName = lastName;
+    public Client(String firstName, String lastName, String phone, String password) {
         this.firstName = firstName;
+        this.lastName = lastName;
         this.phone = phone;
         this.password = password;
     }
-
 
     @Override
     public final boolean equals(Object o) {

@@ -42,6 +42,15 @@ public class GlobalExceptionHandlerControllerAdvice extends ResponseEntityExcept
         return problemDetail;
     }
 
+    @ExceptionHandler(AppointmentsNotCancelledException.class)
+    public ProblemDetail handleAppointmentsNotCancelledException(HttpServletRequest request, AppointmentsNotCancelledException exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, exception.getMessage());
+        problemDetail.setTitle("Конфликт данных");
+        problemDetail.setInstance(URI.create(request.getRequestURI()));
+        problemDetail.setType(URI.create(PROBLEM_DETAIL_TYPE));
+        return problemDetail;
+    }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
@@ -90,19 +99,10 @@ public class GlobalExceptionHandlerControllerAdvice extends ResponseEntityExcept
         return problemDetail;
     }
 
-    @ExceptionHandler(UnauthorizedAccessException.class)
-    public ProblemDetail handleUnauthorizedAccessException(HttpServletRequest request, UnauthorizedAccessException exception) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, exception.getMessage());
-        problemDetail.setTitle("Доступ запрещен");
-        problemDetail.setInstance(URI.create(request.getRequestURI()));
-        problemDetail.setType(URI.create(PROBLEM_DETAIL_TYPE));
-        return problemDetail;
-    }
-
-    @ExceptionHandler(ValidationException.class)
-    public ProblemDetail handleValidationException(HttpServletRequest request, ValidationException exception) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
-        problemDetail.setTitle("Ошибка валидации");
+    @ExceptionHandler(UnauthorizedException.class)
+    public ProblemDetail handleUnauthorizedAccessException(HttpServletRequest request, UnauthorizedException exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, exception.getMessage());
+        problemDetail.setTitle("Ошибка аутентификации");
         problemDetail.setInstance(URI.create(request.getRequestURI()));
         problemDetail.setType(URI.create(PROBLEM_DETAIL_TYPE));
         return problemDetail;

@@ -1,4 +1,4 @@
-package ru.fav.petcare.grooming.salon.config;
+package ru.fav.petcare.grooming.salon.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

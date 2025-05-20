@@ -5,6 +5,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import ru.fav.petcare.grooming.salon.controller.dto.ClientDto;
 import ru.fav.petcare.grooming.salon.entity.Client;
 import ru.fav.petcare.grooming.salon.exception.InvalidCredentialsException;
 import ru.fav.petcare.grooming.salon.exception.NotFoundException;
@@ -34,10 +35,11 @@ public class ClientAuthServiceImpl implements ClientAuthService {
     @Override
     public Client register(String firstName, String lastName, String phone, String password, String confirmPassword) {
         if(!password.equals(confirmPassword)) {
-            throw new PasswordMismatchException();
+            throw new PasswordMismatchException("Пароли не совпадают");
         }
 
-        Client client = clientService.createClient(firstName, lastName, phone, password);
+        Client client = clientService.createClient(
+                new ClientDto(firstName, lastName, phone, null), password);
         return clientService.findClientByPhone(client.getPhone());
     }
 }
