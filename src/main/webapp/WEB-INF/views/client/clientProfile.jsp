@@ -86,7 +86,7 @@
             </c:if>
 
             <br>
-            <h3><a href="${pageContext.request.contextPath}">Вернуться на главную страницу</a></h3>
+            <h3><a href="/">Вернуться на главную страницу</a></h3>
         </div>
     </body>
 </html>
