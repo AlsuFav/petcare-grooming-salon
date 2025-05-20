@@ -37,7 +37,7 @@
                 </c:forEach>
 
                 <br>
-                <form action="selectAppointmentOptions" method="get" class="inline_form">
+                <form action="createAppointment" method="get" class="inline_form">
                     <button type="submit">Записать питомца на груминг</button>
                 </form>
 

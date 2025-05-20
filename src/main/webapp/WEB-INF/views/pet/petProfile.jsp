@@ -47,7 +47,7 @@
             </c:if>
 
             <br>
-            <p><b><a href="selectAppointmentOptions">Записать питомца на груминг</a></b></p>
+            <p><b><a href="createAppointment">Записать питомца на груминг</a></b></p>
 
             <br>
             <form action="deletePet" method="post" style="display:inline;">
@@ -55,8 +55,10 @@
                 <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этого питомца?')">Удалить профиль питомца</button>
             </form>
 
-            <c:if test="${param.error == 'cancel_appointments_first'}">
-                <p style="color:red;">Невозможно удалить питомца. Сначала отмените все предстоящие записи.</p>
+            <c:if test="${error == 'cancel_appointments_first'}">
+                <div class="error-message">
+                    Невозможно удалить питомца. Сначала отмените все предстоящие записи.
+                </div>
             </c:if>
 
             <br>

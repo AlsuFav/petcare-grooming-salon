@@ -66,7 +66,7 @@
 
             <br>
 
-            <p><b><a href="selectAppointmentOptions">Записать питомца на груминг</a></b></p>
+            <p><b><a href="createAppointment">Записать питомца на груминг</a></b></p>
 
 
             <br>

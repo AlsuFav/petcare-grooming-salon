@@ -84,9 +84,10 @@ public class JwtCookieFilter extends OncePerRequestFilter {
                 || path.equals("/articles/")
                 || path.equals("/login")
                 || path.equals("/register")
+                || path.startsWith("/api/")
                 || path.startsWith("/css/")
                 || path.startsWith("/js/")
-                || path.equals("/assets/")
+                || path.startsWith("/assets/")
                 || path.startsWith("/WEB-INF/views/");
     }
 }

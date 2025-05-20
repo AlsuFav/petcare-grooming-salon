@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Entity
@@ -54,5 +55,10 @@ public class TimeSlot {
     @Override
     public String toString() {
         return "TimeSlot(" + "id=" + id + ", startTime=" + startTime + ", taken=" + taken + ')';
+    }
+
+    public String getTime() {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        return startTime.format(dateTimeFormatter);
     }
 }

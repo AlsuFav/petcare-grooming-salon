@@ -1,6 +1,7 @@
 package ru.fav.petcare.grooming.salon.service.impl;
 
 import lombok.AllArgsConstructor;
+import ru.fav.petcare.grooming.salon.entity.Pet;
 import ru.fav.petcare.grooming.salon.entity.Service;
 import ru.fav.petcare.grooming.salon.exception.NotFoundException;
 import ru.fav.petcare.grooming.salon.repository.ServiceRepository;
@@ -23,6 +24,11 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public List<Service> findAll() {
         return serviceRepository.findAll();
+    }
+
+    @Override
+    public List<Service> findAvailableForPet(Pet pet) {
+        return serviceRepository.findAvailableServicesForPet(pet.getId());
     }
 
 }
