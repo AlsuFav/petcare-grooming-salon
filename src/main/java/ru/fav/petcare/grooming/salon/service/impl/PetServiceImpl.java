@@ -48,8 +48,8 @@ public class PetServiceImpl implements PetService {
         Client owner = clientService.findClientById(ownerId);
 
         Breed breed = null;
-        if (petDto.getBreedId() != null) {
-            breed = breedService.findBreedById(petDto.getBreedId());
+        if (petDto.getBreed() != null) {
+            breed = breedService.findBreedByName(petDto.getBreed());
         }
 
         Pet pet = new Pet();
@@ -74,13 +74,17 @@ public class PetServiceImpl implements PetService {
         pet.setBirthDate(petDto.getBirthDate());
 
         if (pet.getSpecies().equalsIgnoreCase("собака")) {
-            Breed breed = breedService.findBreedById(petDto.getBreedId());
+            Breed breed = breedService.findBreedByName(petDto.getBreed());
             Breed oldBreed = pet.getBreed();
 
             pet.setBreed(breed);
 
             if (!breedService.isSameBreedType(oldBreed.getId(), breed.getId())) {
-                appointmentService.updateAppointmentPricesForPet(pet);
+                try {
+                    appointmentService.updateAppointmentPricesForPet(pet);
+                } catch (NotFoundException e) {
+                    throw new AppointmentsNotCancelledException("Сначала отмените записи для питомца " + pet.getName());
+                }
             }
         }
 

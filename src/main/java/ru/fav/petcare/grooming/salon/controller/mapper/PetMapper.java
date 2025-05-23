@@ -9,10 +9,12 @@ public class PetMapper {
 
     public PetDto toDto(Pet pet) {
         PetDto dto = new PetDto();
+        dto.setId(pet.getId());
         dto.setName(pet.getName());
         dto.setSpecies(pet.getSpecies());
         dto.setBirthDate(pet.getBirthDate());
-        dto.setBreedId(pet.getBreed() != null? pet.getBreed().getId() : null);
+        dto.setBreed(pet.getBreed() != null? pet.getBreed().getName() : null);
+        dto.setImagePath(pet.getImagePath());
         return dto;
     }
 }

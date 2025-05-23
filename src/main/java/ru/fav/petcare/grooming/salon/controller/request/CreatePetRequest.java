@@ -1,7 +1,8 @@
-package ru.fav.petcare.grooming.salon.controller.dto;
+package ru.fav.petcare.grooming.salon.controller.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +14,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PetDto {
-    @NotBlank
-    private Long id;
+public class CreatePetRequest {
 
     @NotBlank
     private String name;
@@ -25,9 +24,8 @@ public class PetDto {
 
     private String breed;
 
-    @NotBlank
+    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private LocalDate birthDate;
 
-    String imagePath;
 }

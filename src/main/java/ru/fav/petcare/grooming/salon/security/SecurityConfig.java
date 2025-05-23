@@ -37,6 +37,7 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/client/**").authenticated()
+                        .requestMatchers("/api/v1/pets/**").authenticated()
                         .requestMatchers("/api/v1/**").permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

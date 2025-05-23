@@ -24,6 +24,12 @@ public class BreedServiceImpl implements BreedService {
     }
 
     @Override
+    public Breed findBreedByName(String name) {
+        return breedRepository.findBreedByName(name)
+                .orElseThrow(() -> new NotFoundException("Порода с названием \"" + name + "\" не найдена"));
+    }
+
+    @Override
     public List<Breed> findAllBreeds() {
         return breedRepository.findAll();
     }

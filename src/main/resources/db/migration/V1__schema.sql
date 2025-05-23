@@ -45,7 +45,8 @@ CREATE TABLE pet (
                      species VARCHAR(10) NOT NULL check ( species = 'кошка' or species = 'собака' ),
                      breed_id bigint references breed (id),
                      birth_date DATE NOT NULL,
-                     owner_id bigint NOT NULL REFERENCES client (id) ON DELETE CASCADE
+                     owner_id bigint NOT NULL REFERENCES client (id) ON DELETE CASCADE,
+                    image_path varchar(256)
 );
 
 

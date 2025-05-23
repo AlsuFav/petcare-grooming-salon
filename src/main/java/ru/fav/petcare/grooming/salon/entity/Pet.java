@@ -35,6 +35,8 @@ public class Pet {
     @JoinColumn(name = "owner_id", nullable = false)
     private Client owner;
 
+    String imagePath;
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

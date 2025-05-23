@@ -1,9 +1,7 @@
 package ru.fav.petcare.grooming.salon.controller.web;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -56,10 +54,7 @@ public class PetController {
             return "redirect:/clientProfile";
         }
 
-        PetDto petDto = petMapper.toDto(pet);
-
         model.addAttribute("pet", pet);
-        model.addAttribute("petDto", petDto);
 
         if ("собака".equalsIgnoreCase(pet.getSpecies())) {
             model.addAttribute("breeds", breedService.findAllBreeds());
@@ -71,17 +66,23 @@ public class PetController {
     @PostMapping("/editPet")
     public String updatePet(@RequestParam("petId") Long petId,
                             @ModelAttribute("petDto") PetDto petDto,
+                            RedirectAttributes redirectAttributes,
                             HttpSession session) {
 
         Client client = (Client) session.getAttribute("client");
         Pet pet = petService.findById(petId);
 
-        if(isNotClientsPet(pet, client)) {
+        if (isNotClientsPet(pet, client)) {
             return "redirect:/clientProfile";
         }
 
-        petService.updatePetById(petId, petDto);
-        return "redirect:/petProfile?petId=" + petId;
+        try {
+            petService.updatePetById(petId, petDto);
+            return "redirect:/petProfile?petId=" + petId;
+        } catch (AppointmentsNotCancelledException e) {
+            redirectAttributes.addFlashAttribute("error", "cancel_appointments_first");
+            return "redirect:/editPet?petId=" + petId;
+        }
     }
 
     @PostMapping("/deletePet")

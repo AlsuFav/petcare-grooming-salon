@@ -39,10 +39,10 @@
                 </div>
 
                 <div id="breedField" style="display: none;">
-                    <label for="breedId">Порода: </label>
-                    <select id="breedId" name="breedId">
+                    <label for="breed">Порода: </label>
+                    <select id="breed" name="breed">
                         <c:forEach var="breed" items="${breeds}">
-                            <option value="${breed.id}">${breed.name}</option>
+                            <option value="${breed.name}">${breed.name}</option>
                         </c:forEach>
                     </select>
                 </div>

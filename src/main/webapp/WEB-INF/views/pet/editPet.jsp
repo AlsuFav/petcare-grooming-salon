@@ -37,15 +37,21 @@
 
                 <c:if test="${pet.species == 'собака'}">
                     <div>
-                        <label for="breedId">Порода: </label>
-                        <select id="breedId" name="breedId">
+                        <label for="breed">Порода: </label>
+                        <select id="breed" name="breed">
                             <c:forEach var="breed" items="${breeds}">
-                                <option value="${breed.id}"
+                                <option value="${breed.name}"
                                     <c:if test="${pet.breed != null && pet.breed.id == breed.id}">selected</c:if>>
                                     ${breed.name}
                                 </option>
                             </c:forEach>
                         </select>
+                    </div>
+                </c:if>
+
+                <c:if test="${error == 'cancel_appointments_first'}">
+                    <div class="error-message">
+                        Невозможно изменить породу. Сначала отмените все предстоящие записи.
                     </div>
                 </c:if>
 
