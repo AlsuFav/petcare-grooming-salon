@@ -7,10 +7,12 @@ import ru.fav.petcare.grooming.salon.entity.Appointment;
 import ru.fav.petcare.grooming.salon.entity.Client;
 import ru.fav.petcare.grooming.salon.entity.Pet;
 import ru.fav.petcare.grooming.salon.entity.TimeSlot;
+import ru.fav.petcare.grooming.salon.exception.BadRequestException;
 import ru.fav.petcare.grooming.salon.exception.NotFoundException;
 import ru.fav.petcare.grooming.salon.repository.AppointmentRepository;
 import ru.fav.petcare.grooming.salon.service.AppointmentService;
 import ru.fav.petcare.grooming.salon.service.ServicePriceService;
+import ru.fav.petcare.grooming.salon.service.ServiceService;
 import ru.fav.petcare.grooming.salon.service.TimeSlotService;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository appointmentRepository;
     private final TimeSlotService timeSlotService;
     private final ServicePriceService servicePriceService;
+    private final ServiceService serviceService;
 
     @Override
     public Appointment findById(Long id) {
@@ -30,13 +33,25 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public void book(Pet pet, ru.fav.petcare.grooming.salon.entity.Service service, TimeSlot timeSlot, int price) {
+    public void book(Pet pet, ru.fav.petcare.grooming.salon.entity.Service service, TimeSlot timeSlot) {
+
+        if(timeSlot.isTaken()) {
+            throw new BadRequestException("Временной слот с ID " + timeSlot.getId() + " занят");
+        }
+
+        if(serviceService.findAvailableForPet(pet).stream().mapToLong(ru.fav.petcare.grooming.salon.entity.Service::getId).noneMatch(id -> id == service.getId())) {
+            throw new BadRequestException("Услуга с ID " + service.getId() + " не доступна для питомца");
+        }
+        
+        int price = servicePriceService.findPriceForPetAndService(pet, service);
+
         Appointment appointment = new Appointment();
         appointment.setPet(pet);
         appointment.setGroomer(timeSlot.getGroomer());
         appointment.setService(service);
         appointment.setPrice(price);
         appointment.setDate(timeSlot.getStartTime());
+
 
         appointmentRepository.save(appointment);
         timeSlotService.setTaken(timeSlot.getId());
@@ -54,6 +69,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<Appointment> findUpcomingByClient(Client client) {
         return appointmentRepository.findUpcomingByClientId(client.getId());
+    }
+
+    @Override
+    public List<Appointment> findPassedByClient(Client client) {
+        return appointmentRepository.findPassedByClientId(client.getId());
     }
 
     @Override

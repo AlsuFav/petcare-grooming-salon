@@ -13,6 +13,8 @@
     <head>
         <title>Регистрация</title>
         <link rel="stylesheet" href="<c:url value='/css/styles.css' />">
+        <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.8/dist/inputmask.min.js"></script>
+        <script src="<c:url value='/js/phoneMask.js' />"></script>
     </head>
     <body>
         <div class="container">
@@ -36,7 +38,7 @@
 
                 <div>
                     <label for="phone">Телефон:</label>
-                    <input type="text" id="phone" name="phone" value="${param.phone}">
+                    <input type="tel" id="phone" name="phone" value="${param.phone}">
                     <c:if test="${not empty errorPhone}">
                         <p style="color: red;">${errorPhone}</p>
                     </c:if>

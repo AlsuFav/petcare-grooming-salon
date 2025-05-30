@@ -8,6 +8,7 @@ import java.util.List;
 public interface BreedService {
     Breed findBreedById(Long id);
     Breed findBreedByName(String name);
+    List<Breed> findBreedByNameContaining(String query);
     List<Breed> findAllBreeds();
     boolean isSameBreedType(Long breedId1, Long breedId2);
 }

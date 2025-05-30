@@ -23,7 +23,7 @@
 
             <p>Дата рождения: ${pet.getBirthDateFormatted()}</p>
             <p>Вид: ${pet.species}</p>
-            <c:if test="${pet.species == 'собака'}">
+            <c:if test="${pet.species == 'Собака'}">
                 <p>Порода: ${pet.breed.name}</p>
             </c:if>
 

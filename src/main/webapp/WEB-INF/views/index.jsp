@@ -56,7 +56,7 @@
         </c:forEach>
 
         <br>
-        <h4><a href="services">Список услуг с ценами</a></h4>
+        <h4><a href="services?currency=RUB">Список услуг с ценами</a></h4>
         <form action="createAppointment" method="get" class="inline_form">
             <button type="submit">Записать питомца на груминг</button>
         </form>

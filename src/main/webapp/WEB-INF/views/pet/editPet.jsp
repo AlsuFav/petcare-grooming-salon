@@ -35,7 +35,7 @@
                     <input type="text" id="species" name="species" value="${pet.species}" readonly>
                 </div>
 
-                <c:if test="${pet.species == 'собака'}">
+                <c:if test="${pet.species == 'Собака'}">
                     <div>
                         <label for="breed">Порода: </label>
                         <select id="breed" name="breed">

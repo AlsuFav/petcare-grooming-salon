@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface ServicePriceService {
     List<ServicePrice> findAll();
+    List<ServicePrice> findAllInCurrency(String currencyCode);
     int findPriceForPetAndService(Pet pet, Service service);
 }

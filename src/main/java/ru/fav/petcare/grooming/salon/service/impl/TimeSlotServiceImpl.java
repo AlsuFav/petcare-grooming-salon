@@ -29,6 +29,11 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     }
 
     @Override
+    public List<TimeSlot> findAvailableTimeSlots() {
+        return timeSlotRepository.findAvailableTimeSlots();
+    }
+
+    @Override
     public Map<LocalDate, List<TimeSlot>> findAvailableTimeSlotsGroupedByDate() {
         return timeSlotRepository.findAvailableTimeSlots().stream()
                 .collect(Collectors.groupingBy(slot -> slot.getStartTime().toLocalDate()));

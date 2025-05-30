@@ -81,9 +81,10 @@ public class JwtCookieFilter extends OncePerRequestFilter {
     private boolean isPublicPath(String path) {
         return path.equals("/")
                 || path.equals("/services")
-                || path.equals("/articles/")
                 || path.equals("/login")
                 || path.equals("/register")
+                || path.startsWith("/articles/")
+                || path.startsWith("/error/")
                 || path.startsWith("/api/")
                 || path.startsWith("/css/")
                 || path.startsWith("/js/")

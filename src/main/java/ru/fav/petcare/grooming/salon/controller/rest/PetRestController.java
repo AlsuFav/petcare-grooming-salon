@@ -51,11 +51,11 @@ public class PetRestController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<PetDto> getPet(@PathVariable Long id) {
-        Long clientId = authUtils.getCurrentClientId();
+        Client client = clientService.findClientById(authUtils.getCurrentClientId());
         Pet pet = petService.findById(id);
 
-        if (!pet.getOwner().getId().equals(clientId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (isNotClientsPet(pet, client)) {
+            throw new UnauthorizedException("Нет доступа к этому питомцу");
         }
         
         return ResponseEntity.ok(petMapper.toDto(pet));
@@ -89,8 +89,10 @@ public class PetRestController {
         PetDto petDto = new PetDto();
         petDto.setName(createPetRequest.getName());
         petDto.setSpecies(createPetRequest.getSpecies());
-        petDto.setBreed(createPetRequest.getBreed());
         petDto.setBirthDate(createPetRequest.getBirthDate());
+
+        String breed = petDto.getSpecies().equals("Собака") ? createPetRequest.getBreed() : null;
+        petDto.setBreed(breed);
 
         petService.createPet(clientId, petDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -107,9 +109,9 @@ public class PetRestController {
     })
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updatePet(@RequestBody @Valid UpdatePetRequest updatePetRequest) {
+    public ResponseEntity<Void> updatePet(@PathVariable long id, @RequestBody @Valid UpdatePetRequest updatePetRequest) {
         Client client = clientService.findClientById(authUtils.getCurrentClientId());
-        Pet pet = petService.findById(updatePetRequest.getId());
+        Pet pet = petService.findById(id);
 
         if (isNotClientsPet(pet, client)) {
             throw new UnauthorizedException("Нет доступа к этому питомцу");
@@ -133,11 +135,11 @@ public class PetRestController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePet(@PathVariable Long id) {
-        Long clientId = authUtils.getCurrentClientId();
+        Client client = clientService.findClientById(authUtils.getCurrentClientId());
         Pet pet = petService.findById(id);
 
-        if (!pet.getOwner().getId().equals(clientId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (isNotClientsPet(pet, client)) {
+            throw new UnauthorizedException("Нет доступа к этому питомцу");
         }
         
         petService.deletePetById(id);

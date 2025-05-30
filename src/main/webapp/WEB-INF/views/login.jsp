@@ -15,6 +15,9 @@
         <meta charset="UTF-8">
         <title>Вход</title>
         <link rel="stylesheet" href="<c:url value='/css/styles.css' />">
+        <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.8/dist/inputmask.min.js"></script>
+        <script src="<c:url value='/js/phoneMask.js' />"></script>
+
     </head>
     <body>
         <div class="container">

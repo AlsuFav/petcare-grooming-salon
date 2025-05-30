@@ -64,9 +64,8 @@ public class AppointmentController {
         Pet pet = petService.findById(petId);
         Service service = serviceService.findById(serviceId);
         TimeSlot timeSlot = timeSlotService.findById(timeSlotId);
-        int price = servicePriceService.findPriceForPetAndService(pet, service);
 
-        appointmentService.book(pet, service, timeSlot, price);
+        appointmentService.book(pet, service, timeSlot);
         return "redirect:/clientProfile";
     }
 

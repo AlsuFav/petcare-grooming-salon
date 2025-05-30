@@ -21,10 +21,10 @@
 
             <form action="addPet" method="post">
 
-                <input type="radio" id="cat" name="species" value="кошка" checked="checked" onclick="toggleBreedField()" required>
+                <input type="radio" id="cat" name="species" value="Кошка" checked="checked" onclick="toggleBreedField()" required>
                 <label for="cat">Кошка 🐈</label>
 
-                <input type="radio" id="dog" name="species" value="собака" onclick="toggleBreedField()" required>
+                <input type="radio" id="dog" name="species" value="Собака" onclick="toggleBreedField()" required>
                 <label for="dog">Собака 🐕</label>
 
 

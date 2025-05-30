@@ -8,7 +8,7 @@ function toggleBreedField() {
     const species = document.querySelector('input[name="species"]:checked').value;
     const breedField = document.getElementById('breedField');
 
-    if (species === 'собака') {
+    if (species === 'Собака') {
         breedField.style.display = 'block';
     } else {
         breedField.style.display = 'none';

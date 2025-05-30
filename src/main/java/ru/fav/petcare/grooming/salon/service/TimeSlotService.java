@@ -1,5 +1,6 @@
 package ru.fav.petcare.grooming.salon.service;
 
+import ru.fav.petcare.grooming.salon.controller.dto.TimeSlotDto;
 import ru.fav.petcare.grooming.salon.entity.Groomer;
 import ru.fav.petcare.grooming.salon.entity.TimeSlot;
 
@@ -10,6 +11,7 @@ import java.util.Map;
 
 public interface TimeSlotService {
     TimeSlot findById(Long id);
+    List<TimeSlot> findAvailableTimeSlots();
     Map<LocalDate, List<TimeSlot>> findAvailableTimeSlotsGroupedByDate();
     void setTaken(Long id);
     void setEmptyByStartTimeAndGroomer(LocalDateTime startTime, Groomer groomer);

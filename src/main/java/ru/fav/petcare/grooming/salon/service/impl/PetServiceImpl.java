@@ -9,6 +9,7 @@ import ru.fav.petcare.grooming.salon.entity.Breed;
 import ru.fav.petcare.grooming.salon.entity.Client;
 import ru.fav.petcare.grooming.salon.entity.Pet;
 import ru.fav.petcare.grooming.salon.exception.AppointmentsNotCancelledException;
+import ru.fav.petcare.grooming.salon.exception.BadRequestException;
 import ru.fav.petcare.grooming.salon.exception.DayInFutureException;
 import ru.fav.petcare.grooming.salon.exception.NotFoundException;
 import ru.fav.petcare.grooming.salon.repository.PetRepository;
@@ -19,6 +20,7 @@ import ru.fav.petcare.grooming.salon.service.PetService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -47,9 +49,17 @@ public class PetServiceImpl implements PetService {
 
         Client owner = clientService.findClientById(ownerId);
 
+        if(! (petDto.getSpecies().equals("Собака") || (petDto.getSpecies().equals("Кошка")))) {
+            throw new BadRequestException("Вид питомца должен быть \"Собака\" или \"Кошка\"");
+        }
+
         Breed breed = null;
-        if (petDto.getBreed() != null) {
+        if (Objects.equals(petDto.getSpecies(), "Собака")) {
             breed = breedService.findBreedByName(petDto.getBreed());
+        }
+
+        if(petDto.getSpecies().equals("Собака") && breed == null) {
+            throw new BadRequestException("Необходимо добавить породу собаки");
         }
 
         Pet pet = new Pet();

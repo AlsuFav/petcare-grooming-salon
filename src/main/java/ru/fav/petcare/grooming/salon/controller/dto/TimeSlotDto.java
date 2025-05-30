@@ -8,27 +8,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PetDto {
+public class TimeSlotDto {
     @NotNull
     private Long id;
 
     @NotBlank
-    private String name;
+    private String groomerName;
 
     @NotBlank
-    private String species;
-
-    private String breed;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
+    private LocalDateTime startTime;
     @NotBlank
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
-    private LocalDate birthDate;
-
-    String imagePath;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
+    private LocalDateTime endTime;
 }

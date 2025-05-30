@@ -38,6 +38,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/client/**").authenticated()
                         .requestMatchers("/api/v1/pets/**").authenticated()
+                        .requestMatchers("/api/v1/appointments/**").authenticated()
+                        .requestMatchers("/api/v1/services/**").authenticated()
                         .requestMatchers("/api/v1/**").permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -52,7 +54,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/services", "/articles/**","/login", "/register", "/css/**", "/js/**", "/assets/**", "/WEB-INF/views/**").permitAll()
+                        .requestMatchers("/", "/services", "/articles/**","/login", "/register", "/error/**", "/css/**", "/js/**", "/assets/**", "/WEB-INF/views/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)

@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.fav.petcare.grooming.salon.controller.dto.PetDto;
-import ru.fav.petcare.grooming.salon.controller.mapper.PetMapper;
 import ru.fav.petcare.grooming.salon.entity.Appointment;
 import ru.fav.petcare.grooming.salon.entity.Client;
 import ru.fav.petcare.grooming.salon.entity.Pet;
@@ -24,7 +23,6 @@ import java.util.Objects;
 public class PetController {
 
     private final PetService petService;
-    private final PetMapper petMapper;
     private final BreedService breedService;
     private final AppointmentService appointmentService;
 
@@ -56,7 +54,7 @@ public class PetController {
 
         model.addAttribute("pet", pet);
 
-        if ("собака".equalsIgnoreCase(pet.getSpecies())) {
+        if ("Собака".equals(pet.getSpecies())) {
             model.addAttribute("breeds", breedService.findAllBreeds());
         }
 

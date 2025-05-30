@@ -193,3 +193,10 @@ input[type="radio"] + label:hover::before {
     color: white;
     border-color: #886e52;
 }
+
+.currency-selector {
+    margin: 20px 0;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 5px;
+}

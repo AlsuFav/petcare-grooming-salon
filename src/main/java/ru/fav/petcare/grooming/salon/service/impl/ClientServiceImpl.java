@@ -28,7 +28,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client findClientByPhone(String phone) {
-        System.out.println("c");
         return clientRepository.findByPhone(phone)
                 .orElseThrow(() -> new NotFoundException("Клиент с телефоном " + phone + " не найден"));
     }
