@@ -6,8 +6,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +32,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Tag(name = "Service Rest Controller", description = "CRUD операции для услуг")
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/services")
@@ -46,9 +49,12 @@ public class ServiceRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Успешное получение списка услуг",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = ServiceDto.class)))),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован"),
-            @ApiResponse(responseCode = "403", description = "Нет доступа к этому питомцу"),
-            @ApiResponse(responseCode = "404", description = "Питомец не найден")
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "403", description = "Нет доступа к этому питомцу",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "404", description = "Питомец не найден",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @GetMapping("/for-pet/{id}")
     public ResponseEntity<List<ServiceDto>> getAllForPet(@PathVariable Long id) {

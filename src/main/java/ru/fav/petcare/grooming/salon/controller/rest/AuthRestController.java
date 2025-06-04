@@ -1,11 +1,14 @@
 package ru.fav.petcare.grooming.salon.controller.rest;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,9 +34,12 @@ public class AuthRestController {
 
     @Operation(summary = "Аутентификация пользователя")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Успешный вход, возвращает JWT-токен"),
-            @ApiResponse(responseCode = "400", description = "Некорректные данные"),
-            @ApiResponse(responseCode = "401", description = "Неверные учетные данные")
+            @ApiResponse(responseCode = "200", description = "Успешный вход, возвращает JWT-токен",
+                    content = @Content(schema = @Schema(implementation = JwtResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Некорректные данные",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "401", description = "Неверные учетные данные",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
 
     @PostMapping("/login")
@@ -48,9 +54,12 @@ public class AuthRestController {
 
     @Operation(summary = "Регистрация нового пользователя")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Успешная регистрация, возвращает JWT-токен"),
-            @ApiResponse(responseCode = "400", description = "Некорректные данные"),
-            @ApiResponse(responseCode = "409", description = "Пользователь уже существует")
+            @ApiResponse(responseCode = "200", description = "Успешная регистрация, возвращает JWT-токен",
+                    content = @Content(schema = @Schema(implementation = JwtResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Некорректные данные",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "409", description = "Пользователь уже существует",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
 
     @PostMapping("/register")

@@ -1,5 +1,6 @@
 package ru.fav.petcare.grooming.salon.exception;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
+@Hidden
 public class WebExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)

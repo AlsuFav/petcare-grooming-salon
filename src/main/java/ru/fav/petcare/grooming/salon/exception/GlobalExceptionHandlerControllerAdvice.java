@@ -1,5 +1,6 @@
 package ru.fav.petcare.grooming.salon.exception;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.net.URI;
 
 @RestControllerAdvice(annotations = RestController.class)
+@Hidden
 public class GlobalExceptionHandlerControllerAdvice extends ResponseEntityExceptionHandler {
 
     private static final String PROBLEM_DETAIL_TYPE = "/swagger-ui/index.html";

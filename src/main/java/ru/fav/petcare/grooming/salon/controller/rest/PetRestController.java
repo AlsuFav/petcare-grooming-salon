@@ -6,10 +6,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,6 +32,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Tag(name = "Pet Rest Controller", description = "CRUD операции для питомцев")
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/pets")
@@ -45,9 +48,12 @@ public class PetRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Успешное получение данных питомца",
                     content = @Content(schema = @Schema(implementation = PetDto.class))),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован"),
-            @ApiResponse(responseCode = "403", description = "Нет доступа к этому питомцу"),
-            @ApiResponse(responseCode = "404", description = "Питомец не найден")
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "403", description = "Нет доступа к этому питомцу",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "404", description = "Питомец не найден",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @GetMapping("/{id}")
     public ResponseEntity<PetDto> getPet(@PathVariable Long id) {
@@ -66,7 +72,8 @@ public class PetRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Успешное получение списка питомцев",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = PetDto.class)))),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован")
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @GetMapping
     public ResponseEntity<List<PetDto>> getAllPets() {
@@ -79,9 +86,12 @@ public class PetRestController {
             description = "Создает нового питомца для текущего клиента")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Питомец успешно создан"),
-            @ApiResponse(responseCode = "400", description = "Некорректные данные"),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован"),
-            @ApiResponse(responseCode = "404", description = "Порода не найдена")
+            @ApiResponse(responseCode = "400", description = "Некорректные данные",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "404", description = "Порода не найдена",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @PostMapping
     public ResponseEntity<Void> createPet(@RequestBody @Valid CreatePetRequest createPetRequest) {
@@ -102,10 +112,14 @@ public class PetRestController {
             description = "Обновляет информацию о питомце")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Данные успешно обновлены"),
-            @ApiResponse(responseCode = "400", description = "Некорректные данные"),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован"),
-            @ApiResponse(responseCode = "403", description = "Нет доступа к этому питомцу"),
-            @ApiResponse(responseCode = "404", description = "Питомец или порода не найдены")
+            @ApiResponse(responseCode = "400", description = "Некорректные данные",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "403", description = "Нет доступа к этому питомцу",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "404", description = "Питомец или порода не найдены",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
 
     @PutMapping("/{id}")
@@ -129,9 +143,12 @@ public class PetRestController {
             description = "Удаляет питомца по его идентификатору")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Питомец успешно удален"),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован"),
-            @ApiResponse(responseCode = "403", description = "Нет доступа к этому питомцу"),
-            @ApiResponse(responseCode = "404", description = "Питомец не найден")
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "403", description = "Нет доступа к этому питомцу",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "404", description = "Питомец не найден",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePet(@PathVariable Long id) {
@@ -144,34 +161,6 @@ public class PetRestController {
         
         petService.deletePetById(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @Operation(summary = "Загрузить изображение питомца",
-            description = "Позволяет загрузить изображение для питомца")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Изображение успешно загружено"),
-            @ApiResponse(responseCode = "400", description = "Некорректный файл"),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован"),
-            @ApiResponse(responseCode = "403", description = "Нет доступа к этому питомцу"),
-            @ApiResponse(responseCode = "404", description = "Питомец не найден")
-    })
-    @PostMapping("/{id}/image")
-    public ResponseEntity<Void> uploadImage(
-            @PathVariable Long id,
-            @RequestParam("file") MultipartFile file) {
-        Client client = clientService.findClientById(authUtils.getCurrentClientId());
-        Pet pet = petService.findById(id);
-        
-        if (isNotClientsPet(pet, client)) {
-            throw new UnauthorizedException("Нет доступа к этому питомцу");
-        }
-
-         String imagePath = fileStorageService.store(file);
-         PetDto petDto = petMapper.toDto(pet);
-         petDto.setImagePath(imagePath);
-         petService.updatePetById(pet.getId(), petDto);
-        
-        return ResponseEntity.ok().build();
     }
 
     private boolean isNotClientsPet(Pet pet, Client client) {

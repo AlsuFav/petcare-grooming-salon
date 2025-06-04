@@ -6,17 +6,17 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.fav.petcare.grooming.salon.controller.dto.AppointmentDto;
-import ru.fav.petcare.grooming.salon.controller.dto.PetDto;
 import ru.fav.petcare.grooming.salon.controller.mapper.AppointmentMapper;
 import ru.fav.petcare.grooming.salon.controller.request.CreateAppointmentRequest;
-import ru.fav.petcare.grooming.salon.controller.request.CreatePetRequest;
 import ru.fav.petcare.grooming.salon.entity.*;
 import ru.fav.petcare.grooming.salon.exception.UnauthorizedException;
 import ru.fav.petcare.grooming.salon.security.AuthUtils;
@@ -27,6 +27,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Tag(name = "Appointment Rest Controller", description = "CRUD операции для записей")
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/appointments")
@@ -45,7 +46,8 @@ public class AppointmentRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Успешное получение списка записей",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = AppointmentDto.class)))),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован")
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @GetMapping("/upcoming")
     public ResponseEntity<List<AppointmentDto>> getAllUpcomingAppointments() {
@@ -59,7 +61,8 @@ public class AppointmentRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Успешное получение списка записей",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = AppointmentDto.class)))),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован")
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @GetMapping("/passed")
     public ResponseEntity<List<AppointmentDto>> getAllPassedAppointments() {
@@ -72,10 +75,13 @@ public class AppointmentRestController {
             description = "Возвращает информацию о записи по его идентификатору")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Успешное получение данных записи",
-                    content = @Content(schema = @Schema(implementation = PetDto.class))),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован"),
-            @ApiResponse(responseCode = "403", description = "Нет доступа к этой записи"),
-            @ApiResponse(responseCode = "404", description = "Запись не найдена")
+                    content = @Content(schema = @Schema(implementation = AppointmentDto.class))),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "403", description = "Нет доступа к этой записи",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "404", description = "Запись не найдена",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @GetMapping("/{id}")
     public ResponseEntity<AppointmentDto> getAppointment(@PathVariable Long id) {
@@ -93,10 +99,14 @@ public class AppointmentRestController {
             description = "Создает новую запись для текущего клиента")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Запись успешно создана"),
-            @ApiResponse(responseCode = "400", description = "Некорректные данные"),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован"),
-            @ApiResponse(responseCode = "403", description = "Нет доступа к указанным ресурсам"),
-            @ApiResponse(responseCode = "404", description = "Один из ресурсов не найден")
+            @ApiResponse(responseCode = "400", description = "Некорректные данные",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "403", description = "Нет доступа к указанным ресурсам",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "404", description = "Один из ресурсов не найден",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @PostMapping
     public ResponseEntity<Void> createAppointment(@RequestBody @Valid CreateAppointmentRequest createAppointmentRequest) {
@@ -119,10 +129,14 @@ public class AppointmentRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Успешное получение информации для подтверждения",
                     content = @Content(schema = @Schema(implementation = AppointmentDto.class))),
-            @ApiResponse(responseCode = "400", description = "Некорректные данные"),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован"),
-            @ApiResponse(responseCode = "403", description = "Нет доступа к указанным ресурсам"),
-            @ApiResponse(responseCode = "404", description = "Один из ресурсов не найден")
+            @ApiResponse(responseCode = "400", description = "Некорректные данные",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "403", description = "Нет доступа к указанным ресурсам",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "404", description = "Один из ресурсов не найден",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @PostMapping("/confirmation-info")
     public ResponseEntity<AppointmentDto> getConfirmationInfo(
@@ -149,9 +163,12 @@ public class AppointmentRestController {
             description = "Отменяет запись по ее идентификатору")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Запись успешно отменена"),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован"),
-            @ApiResponse(responseCode = "403", description = "Нет доступа к этой записи"),
-            @ApiResponse(responseCode = "404", description = "Запись не найдена")
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "403", description = "Нет доступа к этой записи",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "404", description = "Запись не найдена",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAppointment(@PathVariable Long id) {
