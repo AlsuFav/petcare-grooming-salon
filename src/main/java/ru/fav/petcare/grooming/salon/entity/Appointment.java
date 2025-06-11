@@ -49,8 +49,8 @@ public class Appointment {
                 ? proxy.getHibernateLazyInitializer().getPersistentClass()
                 : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Client client = (Client) o;
-        return getId() != null && Objects.equals(getId(), client.getId());
+        Appointment appointment = (Appointment) o;
+        return getId() != null && Objects.equals(getId(), appointment.getId());
     }
 
     @Override

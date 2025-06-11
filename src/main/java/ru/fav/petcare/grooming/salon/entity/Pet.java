@@ -48,8 +48,8 @@ public class Pet {
                 ? proxy.getHibernateLazyInitializer().getPersistentClass()
                 : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Client client = (Client) o;
-        return getId() != null && Objects.equals(getId(), client.getId());
+        Pet pet = (Pet) o;
+        return getId() != null && Objects.equals(getId(), pet.getId());
     }
 
     @Override

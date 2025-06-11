@@ -40,8 +40,8 @@ public class ServicePrice {
                 ? proxy.getHibernateLazyInitializer().getPersistentClass()
                 : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Client client = (Client) o;
-        return getId() != null && Objects.equals(getId(), client.getId());
+        ServicePrice servicePrice = (ServicePrice) o;
+        return getId() != null && Objects.equals(getId(), servicePrice.getId());
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ru.fav.petcare.grooming.salon.controller.dto;
+package ru.fav.petcare.grooming.salon.controller.response;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,20 +7,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServiceDto {
+public class FaqResponse {
     @NotNull
     private Long id;
 
+    @NotNull
+    private String question;
+
     @NotBlank
-    private String name;
-
-    private String description;
-
-    private List<ServicePriceDto> prices;
+    private String answer;
 }

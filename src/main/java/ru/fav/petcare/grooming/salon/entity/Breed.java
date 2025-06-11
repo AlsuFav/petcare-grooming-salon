@@ -34,8 +34,8 @@ public class Breed {
                 ? proxy.getHibernateLazyInitializer().getPersistentClass()
                 : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Client client = (Client) o;
-        return getId() != null && Objects.equals(getId(), client.getId());
+        Breed breed = (Breed) o;
+        return getId() != null && Objects.equals(getId(), breed.getId());
     }
 
     @Override

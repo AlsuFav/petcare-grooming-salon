@@ -40,12 +40,16 @@ public class ServicePriceServiceImpl implements ServicePriceService {
 
 
     @Override
-    public int findPriceForPetAndService(Pet pet, ru.fav.petcare.grooming.salon.entity.Service service) {
+    public ServicePrice findForPetAndService(Pet pet, ru.fav.petcare.grooming.salon.entity.Service service) {
         BreedTypeEnum breedType = pet.getBreed() != null? pet.getBreed().getBreedType() : null;
 
         return servicePriceRepository.findByBreedTypeAndService(breedType, service)
-                .map(ServicePrice::getPrice)
                 .orElseThrow(() -> new NotFoundException("Цена для породы " + breedType + " и услуги " + service.getName() + " не найдена"));
+    }
+
+    @Override
+    public List<ServicePrice> findForService(ru.fav.petcare.grooming.salon.entity.Service service) {
+        return servicePriceRepository.findByService(service);
     }
 
     private ServicePrice convertPrice(ServicePrice original, String currencyCode) {

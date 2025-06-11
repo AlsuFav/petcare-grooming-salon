@@ -7,20 +7,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServiceDto {
-    @NotNull
-    private Long id;
-
+public class ServicePriceDto {
     @NotBlank
-    private String name;
+    private String species;
 
-    private String description;
+    private String breedType;
 
-    private List<ServicePriceDto> prices;
+    @NotNull
+    private int price;
 }

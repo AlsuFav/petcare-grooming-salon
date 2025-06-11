@@ -31,8 +31,8 @@ public class Service {
                 ? proxy.getHibernateLazyInitializer().getPersistentClass()
                 : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Client client = (Client) o;
-        return getId() != null && Objects.equals(getId(), client.getId());
+        Service service = (Service) o;
+        return getId() != null && Objects.equals(getId(), service.getId());
     }
 
     @Override

@@ -43,7 +43,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             throw new BadRequestException("Услуга с ID " + service.getId() + " не доступна для питомца");
         }
         
-        int price = servicePriceService.findPriceForPetAndService(pet, service);
+        int price = servicePriceService.findForPetAndService(pet, service).getPrice();
 
         Appointment appointment = new Appointment();
         appointment.setPet(pet);
@@ -87,7 +87,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         List<Appointment> appointments = appointmentRepository.findUpcomingByPetId(pet.getId());
 
         for (Appointment appointment : appointments) {
-            int price = servicePriceService.findPriceForPetAndService(pet, appointment.getService());
+            int price = servicePriceService.findForPetAndService(pet, appointment.getService()).getPrice();
 
             appointment.setPrice(price);
             appointmentRepository.save(appointment);

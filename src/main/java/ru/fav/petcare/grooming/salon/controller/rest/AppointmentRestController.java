@@ -153,7 +153,7 @@ public class AppointmentRestController {
 
         AppointmentDto appointmentDto = appointmentMapper.toDto(pet, service, timeSlot);
 
-        int price = servicePriceService.findPriceForPetAndService(pet, service);
+        int price = servicePriceService.findForPetAndService(pet, service).getPrice();
         appointmentDto.setPrice(price);
 
         return ResponseEntity.ok(appointmentDto);

@@ -50,7 +50,7 @@ public class AppointmentController {
             @RequestParam Long serviceId) {
         Pet pet = petService.findById(petId);
         Service service = serviceService.findById(serviceId);
-        return servicePriceService.findPriceForPetAndService(pet, service);
+        return servicePriceService.findForPetAndService(pet, service).getPrice();
     }
 
     @PostMapping("/createAppointment")

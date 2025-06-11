@@ -40,8 +40,8 @@ public class Groomer {
                 ? proxy.getHibernateLazyInitializer().getPersistentClass()
                 : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Client client = (Client) o;
-        return getId() != null && Objects.equals(getId(), client.getId());
+        Groomer groomer = (Groomer) o;
+        return getId() != null && Objects.equals(getId(), groomer.getId());
     }
 
     @Override
